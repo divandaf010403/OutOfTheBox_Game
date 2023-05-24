@@ -20,7 +20,7 @@ public class SceneController : MonoBehaviour
         Time.timeScale = 1f;
     }
 
-    public void LoadScene(int scene) {  
+    public void LoadScene(string scene) {  
         SceneManager.LoadScene(scene); 
     }
 

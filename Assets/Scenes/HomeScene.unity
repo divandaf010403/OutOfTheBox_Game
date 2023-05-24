@@ -345,13 +345,13 @@ MonoBehaviour:
       - m_Target: {fileID: 2043633257}
         m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
         m_MethodName: LoadScene
-        m_Mode: 3
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 1
           m_FloatArgument: 0
-          m_StringArgument: PlayGame
+          m_StringArgument: StartGameCutscene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!1 &734485461
@@ -867,7 +867,19 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1128450264}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 2043633257}
+        m_TargetAssemblyTypeName: SceneController, Assembly-CSharp
+        m_MethodName: LoadScene
+        m_Mode: 5
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: Credit
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1452898272
 GameObject:
   m_ObjectHideFlags: 0

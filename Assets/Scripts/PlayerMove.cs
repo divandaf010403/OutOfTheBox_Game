@@ -23,6 +23,7 @@ public class PlayerMove : MonoBehaviour
     [Header("Wet Controll")]
     public float minWet = 0;
     public float currentWet;
+    private bool isRainDamage = false;
 
     [Header("ItemAction ")]
     [SerializeField] public Transform CameraPos;
@@ -40,21 +41,17 @@ public class PlayerMove : MonoBehaviour
     [SerializeField] public LayerMask ReadLayer;
 
     [Header("")]
-    public RainController rain;
-    bool isRain = false;
-    public GameObject setRain;
-    public GameObject playerRainTrigger;
+    private RainController rain;
     public Image centerDot;
 
     // Start is called before the first frame update
     void Start()
     {
         GameObject go = GameObject.Find("Center Dot");
+        rain = gameObject.GetComponent<RainController>();
         centerDot = go.GetComponent<Image>();
         Physics.queriesHitBackfaces = true;
-        setRain.SetActive(false);
         centerDot.gameObject.SetActive(true);
-        playerRainTrigger.SetActive(false);
         pickItemText.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
     }
@@ -79,47 +76,28 @@ public class PlayerMove : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
-        //Rain
-        RainControll();
-
         //Take Item
         PickItem();
 
         //Read Note
         ReadNote();
+
     }
 
     void OnParticleCollision(GameObject other)
     {
-        Debug.Log("Kehujanan");
-        StartCoroutine(TimeWet(1));
-    }
-
-    void RainControll()
-    {
-        if (Input.GetKeyDown(KeyCode.Q) && isRain == false)
+        if(rain.isRain != null)
         {
-            setRain.SetActive(true);
-            playerRainTrigger.SetActive(true);
-            Debug.Log("hujan");
-            isRain = true;
-            //TakeWet(10);
+            if (rain.isRain == true)
+            {
+                if (isRainDamage == false)
+                {
+                    Debug.Log("Kehujanan");
+                    isRainDamage = true;
+                    StartCoroutine(TimeWet(1));
+                }
+            }
         }
-        else if (Input.GetKeyDown(KeyCode.Q) && isRain == true)
-        {
-            setRain.SetActive(false);
-            playerRainTrigger.SetActive(false);
-            Debug.Log("berhenti");
-            isRain = false;
-            //TakeWet(0);
-        }
-    }
-
-    void TakeWet(float wet)
-    {
-        currentWet = wet;
-        rain.SetHealth(currentWet);
-        //Mathf.SmoothDamp(rain.SetHealth(currentWet), minWet, ref currentWet, 100 * Time.deltaTime);
     }
 
     public void PickItem()
@@ -225,9 +203,10 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator TimeWet(int wet)
     {
+        yield return new WaitForSeconds(3);
         currentWet = wet;
         rain.SetHealth(currentWet);
-        yield return new WaitForSeconds(5);
+        isRainDamage = false;
     }
 
     void HighLightCrosshair(bool on)
