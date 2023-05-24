@@ -7,7 +7,8 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Movement")]
     public CharacterController controller;
-    public float speed = 12f;
+    public float speed = 5f;
+    public float runSpeed = 15f;
     public float gravity = -9.81f;
 
     public Transform groundCheck;
@@ -70,6 +71,17 @@ public class PlayerMove : MonoBehaviour
         float verticalInput = Input.GetAxis("Vertical");
 
         Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
+
+        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
+        {
+            speed = runSpeed;
+            Debug.Log("Lariiiii");
+        }
+        else
+        {
+            speed = 5f;
+            Debug.Log("Jalan");
+        }
 
         controller.Move(move * speed * Time.deltaTime);
         controller.Move(velocity * Time.deltaTime);

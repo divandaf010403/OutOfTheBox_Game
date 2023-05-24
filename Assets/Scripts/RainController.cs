@@ -39,7 +39,7 @@ public class RainController : MonoBehaviour
         RainControll();
 
         //Random Weather
-        if(isRain)
+        if (isRain)
         {
             StartCoroutine(randomWeather());
         }
@@ -65,14 +65,20 @@ public class RainController : MonoBehaviour
 
     IEnumerator randomWeather()
     {
-        int randWeather = Random.Range(10, 30);
-        if(isRain == false)
+        int rainTime = Random.Range(5, 10);
+
+        yield return new WaitForSeconds(rainTime);
+        isRain = true;
+        rainPS.SetActive(true);
+        rainTrigger.SetActive(true);
+
+        if (isRain == false)
         {
             isRain = true;
             rainPS.SetActive(true);
             rainTrigger.SetActive(true);
             Debug.Log("hujan");
-            yield return new WaitForSeconds(randWeather);
+            yield return new WaitForSeconds(rainTime);
         }
         else
         {
@@ -80,7 +86,7 @@ public class RainController : MonoBehaviour
             rainPS.SetActive(false);
             rainTrigger.SetActive(false);
             Debug.Log("berhenti");
-            yield return new WaitForSeconds(randWeather);
+            yield return new WaitForSeconds(rainTime);
         }
     }
 
