@@ -75,12 +75,12 @@ public class PlayerMove : MonoBehaviour
         if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
         {
             speed = runSpeed;
-            Debug.Log("Lariiiii");
+            //Debug.Log("Lariiiii");
         }
         else
         {
             speed = 5f;
-            Debug.Log("Jalan");
+            //Debug.Log("Jalan");
         }
 
         controller.Move(move * speed * Time.deltaTime);
@@ -106,7 +106,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     Debug.Log("Kehujanan");
                     isRainDamage = true;
-                    StartCoroutine(TimeWet(1));
+                    StartCoroutine(TimeWet(3));
                 }
             }
         }
@@ -215,7 +215,7 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator TimeWet(int wet)
     {
-        yield return new WaitForSeconds(3);
+        yield return new WaitForSeconds(1);
         currentWet = wet;
         rain.SetHealth(currentWet);
         isRainDamage = false;

@@ -8,6 +8,7 @@ public class RainController : MonoBehaviour
     public Slider healthBar;
     public float currentHealth;
     public bool isRain = false;
+    public bool isFunctionCall = false;
 
     [Header("Randomize Weather")]
     [SerializeField] private float tickFrequency = 1f;
@@ -39,7 +40,7 @@ public class RainController : MonoBehaviour
         RainControll();
 
         //Random Weather
-        if (isRain)
+        if(isFunctionCall == false)
         {
             StartCoroutine(randomWeather());
         }
@@ -66,28 +67,38 @@ public class RainController : MonoBehaviour
     IEnumerator randomWeather()
     {
         int rainTime = Random.Range(5, 10);
+        int longRain = Random.Range(5, 10);
+
+        isFunctionCall = true;
 
         yield return new WaitForSeconds(rainTime);
         isRain = true;
         rainPS.SetActive(true);
         rainTrigger.SetActive(true);
+        yield return new WaitForSeconds(longRain);
+        isRain = false;
+        rainPS.SetActive(false);
+        rainTrigger.SetActive(false);
 
-        if (isRain == false)
-        {
-            isRain = true;
-            rainPS.SetActive(true);
-            rainTrigger.SetActive(true);
-            Debug.Log("hujan");
-            yield return new WaitForSeconds(rainTime);
-        }
-        else
-        {
-            isRain = false;
-            rainPS.SetActive(false);
-            rainTrigger.SetActive(false);
-            Debug.Log("berhenti");
-            yield return new WaitForSeconds(rainTime);
-        }
+        isFunctionCall = false;
+
+
+        //if (isRain == false)
+        //{
+        //    isRain = true;
+        //    rainPS.SetActive(true);
+        //    rainTrigger.SetActive(true);
+        //    Debug.Log("hujan");
+        //    yield return new WaitForSeconds(rainTime);
+        //}
+        //else
+        //{
+        //    isRain = false;
+        //    rainPS.SetActive(false);
+        //    rainTrigger.SetActive(false);
+        //    Debug.Log("berhenti");
+        //    yield return new WaitForSeconds(rainTime);
+        //}
     }
 
     void RainControll()
