@@ -125,7 +125,7 @@ MonoBehaviour:
   notification: {fileID: 0}
   RotationAmount: 90
   forwardDirection: 0
-  speed: 0
+  speed: 1
   col: {fileID: 5263649403817180220}
   isRotatingDoor: 1
   isOpen: 0
