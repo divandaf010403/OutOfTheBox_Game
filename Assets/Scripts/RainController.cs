@@ -11,12 +11,10 @@ public class RainController : MonoBehaviour
     public bool isFunctionCall = false;
 
     [Header("Randomize Weather")]
-    [SerializeField] private float tickFrequency = 1f;
-    private static int currentTick = 0;
-    private int currentWeatherTick = 0;
-    public static int CurrentTick => currentTick;
-    private float lastTickTime = 0;
-    [SerializeField] private static float currentGameTime;
+    //[SerializeField] private float tickFrequency = 1f;
+    //private static int currentTick = 0;
+    //public static int CurrentTick => currentTick;
+    //[SerializeField] private static float currentGameTime;
 
     [Header("Weather VFX")]
     [SerializeField] GameObject rainPS;
@@ -81,24 +79,6 @@ public class RainController : MonoBehaviour
         rainTrigger.SetActive(false);
 
         isFunctionCall = false;
-
-
-        //if (isRain == false)
-        //{
-        //    isRain = true;
-        //    rainPS.SetActive(true);
-        //    rainTrigger.SetActive(true);
-        //    Debug.Log("hujan");
-        //    yield return new WaitForSeconds(rainTime);
-        //}
-        //else
-        //{
-        //    isRain = false;
-        //    rainPS.SetActive(false);
-        //    rainTrigger.SetActive(false);
-        //    Debug.Log("berhenti");
-        //    yield return new WaitForSeconds(rainTime);
-        //}
     }
 
     void RainControll()

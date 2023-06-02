@@ -7,6 +7,7 @@ public class PlayerMove : MonoBehaviour
 {
     [Header("Movement")]
     public CharacterController controller;
+    public Animator animator;
     public float speed = 5f;
     public float runSpeed = 15f;
     public float gravity = -9.81f;
@@ -51,6 +52,7 @@ public class PlayerMove : MonoBehaviour
         GameObject go = GameObject.Find("Center Dot");
         rain = gameObject.GetComponent<RainController>();
         centerDot = go.GetComponent<Image>();
+        animator = GetComponent<Animator>();
         Physics.queriesHitBackfaces = true;
         centerDot.gameObject.SetActive(true);
         pickItemText.gameObject.SetActive(false);
@@ -69,18 +71,27 @@ public class PlayerMove : MonoBehaviour
 
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
+        bool isRunning = animator.GetBool("isRunning");
+        bool walkingPress = Input.GetKey(KeyCode.W);
+        bool runPress = Input.GetKey(KeyCode.LeftShift);
 
         Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
 
-        if(Input.GetKey(KeyCode.W) && Input.GetKey(KeyCode.LeftShift))
-        {
-            speed = runSpeed;
-            //Debug.Log("Lariiiii");
-        }
-        else
+        if(!isRunning && walkingPress)
         {
             speed = 5f;
             //Debug.Log("Jalan");
+            animator.SetBool("isRunning", true);
+        }
+        if (walkingPress && runPress)
+        {
+            speed = runSpeed;
+            //Debug.Log("Lariiiii");
+            animator.SetBool("isRunning", true);
+        }
+        if(isRunning && !walkingPress && !runPress)
+        {
+            animator.SetBool("isRunning", false);
         }
 
         controller.Move(move * speed * Time.deltaTime);
@@ -102,11 +113,19 @@ public class PlayerMove : MonoBehaviour
         {
             if (rain.isRain == true)
             {
-                if (isRainDamage == false)
+                if (isRainDamage == false && currentWet >= 0 && currentWet <= 100)
                 {
                     Debug.Log("Kehujanan");
                     isRainDamage = true;
                     StartCoroutine(TimeWet(3));
+                }
+            }
+            if (rain.isRain == false)
+            {
+                if (currentWet >= 0 && currentWet <= 100)
+                {
+                    Debug.Log("Kering");
+                    StartCoroutine(TimeWet(-3));
                 }
             }
         }
