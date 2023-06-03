@@ -138,7 +138,7 @@ public class PlayerMove : MonoBehaviour
             pickItemText.text = "Interact \"E\"";
             pickItemText.gameObject.SetActive(true);
             centerDot.gameObject.SetActive(false);
-            pickItemText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+            pickItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
             OnItems onItems = pickHit.transform.gameObject.GetComponent<OnItems>();
             if (Input.GetKeyDown(KeyCode.E))
             {
@@ -182,7 +182,7 @@ public class PlayerMove : MonoBehaviour
                 //HighLightCrosshair(true);
                 noteItemText.text = "Interact \"E\"";
                 noteItemText.gameObject.SetActive(true);
-                noteItemText.transform.position = new Vector3(Screen.width * 0.5f, Screen.height * 0.5f, 0);
+                noteItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
                 centerDot.gameObject.SetActive(false);
             }
             else
