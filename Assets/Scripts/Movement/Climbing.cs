@@ -33,6 +33,7 @@ public class Climbing : MonoBehaviour
             {
                 print("vaultable in front");
                 climbText.text = "Space to Climb";
+                climbText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
                 climbText.gameObject.SetActive(true);
                 if (Physics.Raycast(firstHit.point + (cam.transform.forward * playerRadius) + (Vector3.up * 0.6f * playerHeight), Vector3.down, out var secondHit, playerHeight))
                 {

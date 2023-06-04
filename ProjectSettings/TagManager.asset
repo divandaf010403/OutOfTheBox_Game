@@ -6,6 +6,7 @@ TagManager:
   tags:
   - Animals
   - Doors
+  - RainStart
   layers:
   - Default
   - TransparentFX

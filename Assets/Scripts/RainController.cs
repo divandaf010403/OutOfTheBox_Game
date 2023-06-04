@@ -9,46 +9,31 @@ public class RainController : MonoBehaviour
     public float currentHealth;
     public bool isRain = false;
     public bool isFunctionCall = false;
-
-    [Header("Randomize Weather")]
-    //[SerializeField] private float tickFrequency = 1f;
-    //private static int currentTick = 0;
-    //public static int CurrentTick => currentTick;
-    //[SerializeField] private static float currentGameTime;
+    public Text conditionNow;
 
     [Header("Weather VFX")]
     [SerializeField] GameObject rainPS;
     [SerializeField] GameObject rainTrigger;
-
-    [Header("Timer")]
-    public Text timeCount;
-    public float startTimeCount;
 
     // Start is called before the first frame update
     void Start()
     {
         rainPS.SetActive(false);
         rainTrigger.SetActive(false);
+        conditionNow.text = "Sunny Weather";
     }
 
     // Update is called once per frame
     void Update()
     {
         //Rain
-        RainControll();
+        //RainControll();
 
         //Random Weather
         if(isFunctionCall == false)
         {
             StartCoroutine(randomWeather());
         }
-
-        //Timer
-        if (startTimeCount >= 0)
-        {
-            startTimeCount += Time.deltaTime;
-        }
-        timeCount.text = startTimeCount.ToString();
     }
 
     public void SetMaxHealth(float health)
@@ -73,29 +58,31 @@ public class RainController : MonoBehaviour
         isRain = true;
         rainPS.SetActive(true);
         rainTrigger.SetActive(true);
+        conditionNow.text = "Rainy Weather";
         yield return new WaitForSeconds(longRain);
         isRain = false;
         rainPS.SetActive(false);
         rainTrigger.SetActive(false);
+        conditionNow.text = "Sunny Weather";
 
         isFunctionCall = false;
     }
 
-    void RainControll()
-    {
-        if (Input.GetKeyDown(KeyCode.Q) && isRain == false)
-        {
-            rainPS.SetActive(true);
-            rainTrigger.SetActive(true);
-            Debug.Log("hujan");
-            isRain = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Q) && isRain == true)
-        {
-            rainPS.SetActive(false);
-            rainTrigger.SetActive(false);
-            Debug.Log("berhenti");
-            isRain = false;
-        }
-    }
+    //void RainControll()
+    //{
+    //    if (Input.GetKeyDown(KeyCode.Q) && isRain == false)
+    //    {
+    //        rainPS.SetActive(true);
+    //        rainTrigger.SetActive(true);
+    //        Debug.Log("hujan");
+    //        isRain = true;
+    //    }
+    //    else if (Input.GetKeyDown(KeyCode.Q) && isRain == true)
+    //    {
+    //        rainPS.SetActive(false);
+    //        rainTrigger.SetActive(false);
+    //        Debug.Log("berhenti");
+    //        isRain = false;
+    //    }
+    //}
 }

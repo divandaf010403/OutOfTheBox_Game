@@ -26,6 +26,7 @@ public class PlayerMove : MonoBehaviour
     public float minWet = 0;
     public float currentWet;
     private bool isRainDamage = false;
+    private bool isNotWet = false;
 
     [Header("ItemAction ")]
     [SerializeField] public Transform CameraPos;
@@ -57,6 +58,7 @@ public class PlayerMove : MonoBehaviour
         centerDot.gameObject.SetActive(true);
         pickItemText.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
+        gameObject.GetComponent<RainController>().enabled = false;
     }
 
     // Update is called once per frame
@@ -99,33 +101,37 @@ public class PlayerMove : MonoBehaviour
 
         velocity.y += gravity * Time.deltaTime;
 
+        if (isRainDamage == false && isNotWet == false)
+        {
+            Debug.Log("Kering");
+            StartCoroutine(TimeDry(-2));
+        }
+
         //Take Item
         PickItem();
 
         //Read Note
         ReadNote();
 
+        //Starting Random Rain
+        if (GameObject.FindGameObjectsWithTag("RainStart").Length == 0)
+        {
+            GameObject.Find("MC").GetComponent<RainController>().enabled = true;
+            Debug.Log("Random Cuaca Dimulai");
+        }
+
     }
 
     void OnParticleCollision(GameObject other)
     {
-        if(rain.isRain != null)
+        if(rain != null)
         {
             if (rain.isRain == true)
             {
-                if (isRainDamage == false && currentWet >= 0 && currentWet <= 100)
+                if (isRainDamage == false)
                 {
                     Debug.Log("Kehujanan");
-                    isRainDamage = true;
-                    StartCoroutine(TimeWet(3));
-                }
-            }
-            if (rain.isRain == false)
-            {
-                if (currentWet >= 0 && currentWet <= 100)
-                {
-                    Debug.Log("Kering");
-                    StartCoroutine(TimeWet(-3));
+                    StartCoroutine(TimeWet(5));
                 }
             }
         }
@@ -137,7 +143,6 @@ public class PlayerMove : MonoBehaviour
         {
             pickItemText.text = "Interact \"E\"";
             pickItemText.gameObject.SetActive(true);
-            centerDot.gameObject.SetActive(false);
             pickItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
             OnItems onItems = pickHit.transform.gameObject.GetComponent<OnItems>();
             if (Input.GetKeyDown(KeyCode.E))
@@ -167,7 +172,6 @@ public class PlayerMove : MonoBehaviour
         else
         {
             pickItemText.gameObject.SetActive(false);
-            centerDot.gameObject.SetActive(true);
         }
     }
 
@@ -180,7 +184,7 @@ public class PlayerMove : MonoBehaviour
             {
                 _noteController = readableNote;
                 //HighLightCrosshair(true);
-                noteItemText.text = "Interact \"E\"";
+                noteItemText.text = "Read \"E\"";
                 noteItemText.gameObject.SetActive(true);
                 noteItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
                 centerDot.gameObject.SetActive(false);
@@ -234,17 +238,31 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator TimeWet(int wet)
     {
+        isRainDamage = true;
+
         yield return new WaitForSeconds(1);
         currentWet = wet;
         rain.SetHealth(currentWet);
+
         isRainDamage = false;
+    }
+
+    IEnumerator TimeDry(int dry)
+    {
+        isNotWet = true;
+
+        yield return new WaitForSeconds(3);
+        currentWet = dry;
+        rain.SetHealth(currentWet);
+
+        isNotWet = false;
     }
 
     void HighLightCrosshair(bool on)
     {
         if (on)
         {
-            centerDot.color = Color.red;
+            centerDot.color = Color.white;
         }
         else
         {
