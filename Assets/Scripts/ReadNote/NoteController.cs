@@ -20,6 +20,11 @@ public class NoteController : MonoBehaviour
     [SerializeField] private UnityEvent openEvent;
     private bool isOpen = false;
 
+    [Space(10)]
+    public bool itemSpawn = false;
+    public Rigidbody prefabItem;
+    public Transform spawnPos;
+
     private FirstPersonCamera _firstPersonCam;
 
     // Start is called before the first frame update
@@ -31,13 +36,7 @@ public class NoteController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        //if (isOpen)
-        //{
-        //    if(Input.GetKeyDown(KeyCode.E))
-        //    {
-        //        DisableNote();
-        //    }
-        //}
+        
     }
 
     public void ShowNote(CharacterController player)
@@ -49,6 +48,10 @@ public class NoteController : MonoBehaviour
             isOpen = false;
             //_firstPersonCam.enabled = true;
             GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>().enabled = true;
+            if(itemSpawn == false)
+            {
+                spawningItem();
+            }
         }
         else
         {
@@ -66,13 +69,13 @@ public class NoteController : MonoBehaviour
         }
     }
 
-    //void DisableNote()
-    //{
-        
-    //}
-
-    //void DisablePlayer(bool disable)
-    //{
-    //    player.enabled = !disable;
-    //}
+    void spawningItem()
+    {
+        if (itemSpawn == false && prefabItem != null)
+        {
+            Rigidbody rb;
+            rb = Instantiate(prefabItem, spawnPos.position, spawnPos.rotation) as Rigidbody;
+            itemSpawn = true;
+        }
+    }
 }
