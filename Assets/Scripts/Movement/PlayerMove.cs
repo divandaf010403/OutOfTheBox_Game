@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
@@ -8,9 +9,10 @@ public class PlayerMove : MonoBehaviour
     [Header("Movement")]
     public CharacterController controller;
     public Animator animator;
-    public float speed = 5f;
-    public float runSpeed = 15f;
-    public float gravity = -9.81f;
+    public float walkSpeed = 5f;
+    public bool isRunning = false;
+
+    public float gravity = -9.8f;
 
     public Transform groundCheck;
     public float groundDistance = 0.4f;
@@ -37,6 +39,7 @@ public class PlayerMove : MonoBehaviour
 
     [Header("Inventory")]
     public Inventory inventory;
+    public Text hintTitle;
     public Text textNotification;
 
     [Header("Read Note")]
@@ -50,56 +53,68 @@ public class PlayerMove : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        controller = GetComponent<CharacterController>();
         GameObject go = GameObject.Find("Center Dot");
         rain = gameObject.GetComponent<RainController>();
         centerDot = go.GetComponent<Image>();
         animator = GetComponent<Animator>();
+
         Physics.queriesHitBackfaces = true;
+
         centerDot.gameObject.SetActive(true);
+
         pickItemText.gameObject.SetActive(false);
+        hintTitle.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
+
         gameObject.GetComponent<RainController>().enabled = false;
     }
 
     // Update is called once per frame
     void Update()
     {
-        isGrounded = Physics.CheckSphere(groundCheck.position, groundDistance, groundMask);
+        // Check if the character is grounded
+        isGrounded = Physics.CheckSphere(groundCheck.position, 0.4f, groundMask);
 
-        if(isGrounded && velocity.y < 0)
+        if (isGrounded && velocity.y < 0f)
         {
             velocity.y = -2f;
         }
 
+        float speed = isRunning ? walkSpeed+5 : walkSpeed;
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
-        bool isRunning = animator.GetBool("isRunning");
-        bool walkingPress = Input.GetKey(KeyCode.W);
-        bool runPress = Input.GetKey(KeyCode.LeftShift);
 
         Vector3 move = transform.right * horizontalInput + transform.forward * verticalInput;
+        controller.Move(move * speed * Time.deltaTime);
 
-        if(!isRunning && walkingPress)
+        velocity.y += gravity * Time.deltaTime;
+        controller.Move(velocity * Time.deltaTime);
+
+        if (Input.GetKey(KeyCode.W))
         {
-            speed = 5f;
-            //Debug.Log("Jalan");
+            isRunning = false;
+            animator.SetBool("isRunning", true);
+            //animator.SetBool("IsWalking", true);
+        }
+
+        if (Input.GetKey(KeyCode.W) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        {
+            isRunning = true;
             animator.SetBool("isRunning", true);
         }
-        if (walkingPress && runPress)
+
+        if (Input.GetKeyUp(KeyCode.LeftShift))
         {
-            speed = runSpeed;
-            //Debug.Log("Lariiiii");
+            isRunning = false;
             animator.SetBool("isRunning", true);
+            //animator.SetBool("IsWalking", true);
         }
-        if(isRunning && !walkingPress && !runPress)
+
+        if (Input.GetKeyUp(KeyCode.W))
         {
             animator.SetBool("isRunning", false);
         }
-
-        controller.Move(move * speed * Time.deltaTime);
-        controller.Move(velocity * Time.deltaTime);
-
-        velocity.y += gravity * Time.deltaTime;
 
         if (isRainDamage == false && isNotWet == false)
         {
@@ -222,17 +237,21 @@ public class PlayerMove : MonoBehaviour
 
     IEnumerator UINotification(OnItems onItems)
     {
+        hintTitle.gameObject.SetActive(true);
         textNotification.gameObject.SetActive(true);
         textNotification.text = "Cari Kunci Untuk Membuka Pintu";
         yield return new WaitForSeconds(5);
+        hintTitle.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
     }
 
     IEnumerator UIUseKey(OnItems onItems)
     {
+        hintTitle.gameObject.SetActive(true);
         textNotification.gameObject.SetActive(true);
         textNotification.text = "Pintu Terbuka";
         yield return new WaitForSeconds(5);
+        hintTitle.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
     }
 
