@@ -49,8 +49,8 @@ public class RainController : MonoBehaviour
 
     IEnumerator randomWeather()
     {
-        int rainTime = Random.Range(5, 10);
-        int longRain = Random.Range(5, 10);
+        int rainTime = Random.Range(15, 20);
+        int longRain = Random.Range(15, 20);
 
         isFunctionCall = true;
 

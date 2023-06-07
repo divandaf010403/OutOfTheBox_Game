@@ -27,7 +27,8 @@ public class PlayerMove : MonoBehaviour
     [Header("Wet Controll")]
     public float minWet = 0;
     public float currentWet;
-    private bool isRainDamage = false;
+    public bool isRainFunc = false;
+    public bool isRainDamage = false;
     private bool isNotWet = false;
 
     [Header("ItemAction ")]
@@ -116,9 +117,9 @@ public class PlayerMove : MonoBehaviour
             animator.SetBool("isRunning", false);
         }
 
-        if (isRainDamage == false && isNotWet == false)
+        //Time for dry if character not interact with rain
+        if (isNotWet == false)
         {
-            Debug.Log("Kering");
             StartCoroutine(TimeDry(-2));
         }
 
@@ -139,17 +140,44 @@ public class PlayerMove : MonoBehaviour
 
     void OnParticleCollision(GameObject other)
     {
-        if(rain != null)
+        if (rain != null)
         {
             if (rain.isRain == true)
             {
-                if (isRainDamage == false)
+                if(!isRainFunc)
                 {
+                    isRainDamage = true;
                     Debug.Log("Kehujanan");
                     StartCoroutine(TimeWet(5));
                 }
             }
         }
+    }
+
+    IEnumerator TimeWet(int wet)
+    {
+        isRainFunc = true;
+
+        yield return new WaitForSeconds(1);
+        currentWet = wet;
+        rain.SetHealth(currentWet);
+
+        isRainFunc = false;
+        isRainDamage = false;
+    }
+
+    IEnumerator TimeDry(int dry)
+    {
+        isNotWet = true;
+
+        if (!isRainDamage)
+        {
+            yield return new WaitForSeconds(1);
+            currentWet = dry;
+            rain.SetHealth(currentWet);
+        }
+
+        isNotWet = false;
     }
 
     public void PickItem()
@@ -202,20 +230,17 @@ public class PlayerMove : MonoBehaviour
                 noteItemText.text = "Read \"E\"";
                 noteItemText.gameObject.SetActive(true);
                 noteItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
-                centerDot.gameObject.SetActive(false);
             }
             else
             {
                 clearNote();
                 noteItemText.gameObject.SetActive(false);
-                centerDot.gameObject.SetActive(true);
             }
         }
         else
         {
             clearNote();
             noteItemText.gameObject.SetActive(false);
-            centerDot.gameObject.SetActive(true);
         }
 
         if (_noteController != null)
@@ -253,28 +278,6 @@ public class PlayerMove : MonoBehaviour
         yield return new WaitForSeconds(5);
         hintTitle.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
-    }
-
-    IEnumerator TimeWet(int wet)
-    {
-        isRainDamage = true;
-
-        yield return new WaitForSeconds(1);
-        currentWet = wet;
-        rain.SetHealth(currentWet);
-
-        isRainDamage = false;
-    }
-
-    IEnumerator TimeDry(int dry)
-    {
-        isNotWet = true;
-
-        yield return new WaitForSeconds(3);
-        currentWet = dry;
-        rain.SetHealth(currentWet);
-
-        isNotWet = false;
     }
 
     void HighLightCrosshair(bool on)
