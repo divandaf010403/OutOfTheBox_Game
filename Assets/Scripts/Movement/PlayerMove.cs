@@ -125,7 +125,12 @@ public class PlayerMove : MonoBehaviour
         //Time for dry if character not interact with rain
         if (isNotWet == false)
         {
-            StartCoroutine(TimeDry(-2));
+            if(rain.afterRain == false)
+            {
+                StartCoroutine(TimerCount(5));
+                rain.afterRain = true;
+            }
+            StartCoroutine(TimeDry(-10));
         }
 
         //Die
@@ -173,7 +178,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     isRainDamage = true;
                     Debug.Log("Kehujanan");
-                    StartCoroutine(TimeWet(10));
+                    StartCoroutine(TimeWet(5));
                 }
             }
         }
@@ -203,6 +208,11 @@ public class PlayerMove : MonoBehaviour
         }
 
         isNotWet = false;
+    }
+
+    IEnumerator TimerCount(int time)
+    {
+        yield return new WaitForSeconds(time);
     }
 
     public void PickItem()

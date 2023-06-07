@@ -15,6 +15,8 @@ public class RainController : MonoBehaviour
     [SerializeField] public GameObject rainPS;
     [SerializeField] public GameObject rainTrigger;
 
+    public bool afterRain = false;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -49,8 +51,8 @@ public class RainController : MonoBehaviour
 
     IEnumerator randomWeather()
     {
-        int rainTime = Random.Range(15, 20);
-        int longRain = Random.Range(15, 20);
+        int rainTime = Random.Range(40, 50);
+        int longRain = Random.Range(30, 40);
 
         isFunctionCall = true;
 
@@ -64,6 +66,7 @@ public class RainController : MonoBehaviour
         rainPS.SetActive(false);
         rainTrigger.SetActive(false);
         conditionNow.text = "Sunny Weather";
+        afterRain = false;
 
         isFunctionCall = false;
     }
