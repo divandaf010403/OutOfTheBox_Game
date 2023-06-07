@@ -4341,7 +4341,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 459839602}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.6}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -6148,6 +6148,59 @@ Transform:
   m_Father: {fileID: 111978314}
   m_RootOrder: -1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &667801624
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 667801625}
+  - component: {fileID: 667801627}
+  m_Layer: 0
+  m_Name: RespawanCP
+  m_TagString: Checkpoint
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &667801625
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667801624}
+  m_LocalRotation: {x: -0, y: 0.21379936, z: -0, w: 0.9768776}
+  m_LocalPosition: {x: 192.25401, y: 38.4, z: 102.693184}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 21
+  m_LocalEulerAnglesHint: {x: 0, y: 24.69, z: 0}
+--- !u!65 &667801627
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 667801624}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 1, y: 11.1988945, z: 19.692413}
+  m_Center: {x: -0.00000019359226, y: -5.0994473, z: -2.979342}
 --- !u!4 &683630780 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6051744507334612473, guid: bbb89a74ff9159643b2ed739da6f1881, type: 3}
@@ -18051,6 +18104,7 @@ MonoBehaviour:
     m_Bits: 64
   minWet: 0
   currentWet: 0
+  isRainFunc: 0
   isRainDamage: 0
   CameraPos: {fileID: 1563260901}
   pickItemText: {fileID: 386877985}
@@ -18065,6 +18119,7 @@ MonoBehaviour:
   ReadLayer:
     serializedVersion: 2
     m_Bits: 2048
+  respawnPoint: {x: 0, y: 0, z: 0}
   centerDot: {fileID: 789070607}
 --- !u!143 &1005056874
 CharacterController:

@@ -12,8 +12,8 @@ public class RainController : MonoBehaviour
     public Text conditionNow;
 
     [Header("Weather VFX")]
-    [SerializeField] GameObject rainPS;
-    [SerializeField] GameObject rainTrigger;
+    [SerializeField] public GameObject rainPS;
+    [SerializeField] public GameObject rainTrigger;
 
     // Start is called before the first frame update
     void Start()

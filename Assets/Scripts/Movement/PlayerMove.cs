@@ -47,6 +47,9 @@ public class PlayerMove : MonoBehaviour
     //[SerializeField] private KeyCode interactKey;
     [SerializeField] public LayerMask ReadLayer;
 
+    [Header("Respawn")]
+    public Vector3 respawnPoint;
+
     [Header("")]
     private RainController rain;
     public Image centerDot;
@@ -69,6 +72,8 @@ public class PlayerMove : MonoBehaviour
         textNotification.gameObject.SetActive(false);
 
         gameObject.GetComponent<RainController>().enabled = false;
+
+        respawnPoint = transform.position;
     }
 
     // Update is called once per frame
@@ -123,6 +128,19 @@ public class PlayerMove : MonoBehaviour
             StartCoroutine(TimeDry(-2));
         }
 
+        //Die
+        if (rain.healthBar.value == rain.healthBar.maxValue)
+        {
+            Debug.Log("You Die");
+            transform.position = respawnPoint;
+            rain.healthBar.value = rain.healthBar.minValue;
+            rain.isFunctionCall = false;
+            rain.isRain = false;
+            rain.rainPS.SetActive(false);
+            rain.rainTrigger.SetActive(false);
+            rain.conditionNow.text = "Sunny Weather";
+        }
+
         //Take Item
         PickItem();
 
@@ -133,9 +151,16 @@ public class PlayerMove : MonoBehaviour
         if (GameObject.FindGameObjectsWithTag("RainStart").Length == 0)
         {
             GameObject.Find("MC").GetComponent<RainController>().enabled = true;
-            Debug.Log("Random Cuaca Dimulai");
         }
+    }
 
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.tag == "Checkpoint")
+        {
+            Debug.Log("Checkpoint lewat");
+            respawnPoint = transform.position;
+        }
     }
 
     void OnParticleCollision(GameObject other)
@@ -148,7 +173,7 @@ public class PlayerMove : MonoBehaviour
                 {
                     isRainDamage = true;
                     Debug.Log("Kehujanan");
-                    StartCoroutine(TimeWet(5));
+                    StartCoroutine(TimeWet(10));
                 }
             }
         }
