@@ -46,7 +46,6 @@ public class NoteController : MonoBehaviour
             noteCanvas.SetActive(false);
             player.enabled = true;
             isOpen = false;
-            //_firstPersonCam.enabled = true;
             GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>().enabled = true;
             if(itemSpawn == false)
             {
@@ -61,10 +60,6 @@ public class NoteController : MonoBehaviour
             openEvent.Invoke();
             player.enabled = false;
             isOpen = true;
-            //if(_firstPersonCam != null)
-            //{
-            //    _firstPersonCam.enabled = false;
-            //}
             GameObject.Find("Main Camera").GetComponent<FirstPersonCamera>().enabled = false;
         }
     }

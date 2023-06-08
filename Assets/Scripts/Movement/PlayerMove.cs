@@ -219,7 +219,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (Physics.Raycast(CameraPos.position, CameraPos.forward, out pickHit, MaxPickDistance, PickLayer))
         {
-            pickItemText.text = "Interact \"E\"";
+            pickItemText.text = "Interact (E)";
             pickItemText.gameObject.SetActive(true);
             pickItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
             OnItems onItems = pickHit.transform.gameObject.GetComponent<OnItems>();
@@ -262,7 +262,7 @@ public class PlayerMove : MonoBehaviour
             {
                 _noteController = readableNote;
                 //HighLightCrosshair(true);
-                noteItemText.text = "Read \"E\"";
+                noteItemText.text = "Read (E)";
                 noteItemText.gameObject.SetActive(true);
                 noteItemText.transform.position = new Vector3(Screen.width * 0.65f, Screen.height * 0.5f, 0);
             }
@@ -280,7 +280,8 @@ public class PlayerMove : MonoBehaviour
 
         if (_noteController != null)
         {
-            if(Input.GetKeyDown(KeyCode.E)) {
+            if (Input.GetKeyDown(KeyCode.E))
+            {
                 _noteController.ShowNote(controller);
             }
         }
@@ -290,7 +291,7 @@ public class PlayerMove : MonoBehaviour
     {
         if (_noteController != null)
         {
-            HighLightCrosshair(false);
+            //HighLightCrosshair(false);
             _noteController = null;
         }
     }
@@ -299,7 +300,7 @@ public class PlayerMove : MonoBehaviour
     {
         hintTitle.gameObject.SetActive(true);
         textNotification.gameObject.SetActive(true);
-        textNotification.text = "Cari Kunci Untuk Membuka Pintu";
+        textNotification.text = "Find Key To Open The Door";
         yield return new WaitForSeconds(5);
         hintTitle.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);
@@ -309,7 +310,7 @@ public class PlayerMove : MonoBehaviour
     {
         hintTitle.gameObject.SetActive(true);
         textNotification.gameObject.SetActive(true);
-        textNotification.text = "Pintu Terbuka";
+        textNotification.text = "Door Open";
         yield return new WaitForSeconds(5);
         hintTitle.gameObject.SetActive(false);
         textNotification.gameObject.SetActive(false);

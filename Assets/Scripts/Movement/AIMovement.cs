@@ -5,7 +5,7 @@ using UnityEngine.AI;
 
 public class AIMovement : MonoBehaviour
 {
-    public float moveSpeed = 3f;
+    public float moveSpeed = 1f;
     public float rotSpeed = 100f;
 
     private bool isWandering = false;
@@ -30,17 +30,19 @@ public class AIMovement : MonoBehaviour
         }
         if (isRotatingRight == true)
         {
-            //gameObject.GetComponent<Animator>().Play("idle");
+            gameObject.GetComponent<Animator>().SetBool("Walk", false);
+            gameObject.GetComponent<Animator>().SetBool("Run", false);
             transform.Rotate(transform.up * Time.deltaTime * rotSpeed);
         }
         if (isRotatingLeft == true)
         {
-            //gameObject.GetComponent<Animator>().Play("idle");
+            gameObject.GetComponent<Animator>().SetBool("Walk", false);
+            gameObject.GetComponent<Animator>().SetBool("Run", false);
             transform.Rotate(transform.up * Time.deltaTime * -rotSpeed);
         }
         if (isWalking == true)
         {
-            //gameObject.GetComponent<Animator>().Play("waalk");
+            gameObject.GetComponent<Animator>().SetBool("Walk", true);
             transform.position += transform.forward * moveSpeed * Time.deltaTime;
         }
     }
@@ -59,6 +61,7 @@ public class AIMovement : MonoBehaviour
         isWalking = true;
         yield return new WaitForSeconds(walkTime);
         isWalking = false;
+        gameObject.GetComponent<Animator>().SetBool("Walk", false);
         yield return new WaitForSeconds(rotateWait);
 
         if (rotateLorR == 1)
