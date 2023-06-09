@@ -91,7 +91,7 @@ public class PlayerMove : MonoBehaviour
             velocity.y = -2f;
         }
 
-        float speed = isRunning ? walkSpeed+5 : walkSpeed;
+        float speed = isRunning ? walkSpeed+2 : walkSpeed;
         float horizontalInput = Input.GetAxis("Horizontal");
         float verticalInput = Input.GetAxis("Vertical");
 
@@ -130,8 +130,8 @@ public class PlayerMove : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.W))
         {
             animator.SetBool("isRunning", false);
-            //walkingAudio.Stop();
-            //runningAudio.Stop();
+                //walkingAudio.Stop();
+                //runningAudio.Stop();
         }
 
         //Time for dry if character not interact with rain

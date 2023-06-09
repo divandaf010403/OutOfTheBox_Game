@@ -148,5 +148,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiereItem: {fileID: 0}
   notification: {fileID: 0}
-  getItems: {fileID: 11400000, guid: 9bb736161ff201d428aed4d3fb0b18a4, type: 2}
+  getItems: {fileID: 11400000, guid: b8241fa605d644a758b3e2d304f8b486, type: 2}
   takeSoundEffect: {fileID: 8300000, guid: 74c877cbca4129b449c709dfd3d1e7ee, type: 3}

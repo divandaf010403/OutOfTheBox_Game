@@ -9,11 +9,14 @@ public class RainController : MonoBehaviour
     public float currentHealth;
     public bool isRain = false;
     public bool isFunctionCall = false;
+    public bool isPetir = false;
     public Text conditionNow;
 
     [Header("Weather VFX")]
     [SerializeField] public GameObject rainPS;
     [SerializeField] public GameObject rainTrigger;
+
+    public AudioSource audioHujan;
 
     public bool afterRain = false;
 
@@ -53,6 +56,7 @@ public class RainController : MonoBehaviour
     {
         int rainTime = Random.Range(40, 50);
         int longRain = Random.Range(30, 40);
+        int petir = Random.Range(3, 5);
 
         isFunctionCall = true;
 
@@ -60,8 +64,10 @@ public class RainController : MonoBehaviour
         isRain = true;
         rainPS.SetActive(true);
         rainTrigger.SetActive(true);
+        audioHujan.Play();
         conditionNow.text = "Rainy Weather";
         yield return new WaitForSeconds(longRain);
+        audioHujan.Stop();
         isRain = false;
         rainPS.SetActive(false);
         rainTrigger.SetActive(false);
