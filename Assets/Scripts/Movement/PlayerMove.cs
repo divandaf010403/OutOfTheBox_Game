@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 
 public class PlayerMove : MonoBehaviour
@@ -165,6 +166,11 @@ public class PlayerMove : MonoBehaviour
         {
             Debug.Log("Checkpoint lewat");
             respawnPoint = transform.position;
+        }
+
+        if (other.tag == "EndDemo")
+        {
+            SceneManager.LoadScene("EndDemo");
         }
     }
 

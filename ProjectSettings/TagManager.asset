@@ -8,6 +8,7 @@ TagManager:
   - Doors
   - RainStart
   - Checkpoint
+  - EndDemo
   layers:
   - Default
   - TransparentFX
