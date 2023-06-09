@@ -16,6 +16,8 @@ public class Doors2 : OnItems
     private Quaternion newRotation;
     private Coroutine AnimationCorountine;
 
+    public AudioSource doorSound;
+
     private Vector3 StartRotation;
     private Vector3 forward;
 
@@ -23,6 +25,11 @@ public class Doors2 : OnItems
     {
         StartRotation = transform.rotation.eulerAngles;
         forward = transform.right;
+    }
+
+    private void Start()
+    {
+        doorSound = GetComponent<AudioSource>();
     }
 
     private void Update()
@@ -47,6 +54,7 @@ public class Doors2 : OnItems
         if(isOpen == false)
         {
             Open(-transform.position);
+            doorSound.Play();
             isOpen = true;
         }
     }

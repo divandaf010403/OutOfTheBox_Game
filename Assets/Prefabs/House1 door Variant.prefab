@@ -125,3 +125,4 @@ MonoBehaviour:
   col: {fileID: 5174799481361069896}
   isRotatingDoor: 1
   isOpen: 0
+  doorSound: {fileID: 3035174443727967669, guid: ed8e7b59ab5304f47bb0b75c821c930b, type: 3}

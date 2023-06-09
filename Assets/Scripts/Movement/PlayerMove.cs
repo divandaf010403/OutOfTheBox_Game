@@ -19,6 +19,9 @@ public class PlayerMove : MonoBehaviour
     public float groundDistance = 0.4f;
     public LayerMask groundMask;
 
+        //public AudioSource walkingAudio;
+        //public AudioSource runningAudio;
+
     Vector3 velocity;
     RaycastHit pickHit;
     bool isGrounded;
@@ -103,24 +106,32 @@ public class PlayerMove : MonoBehaviour
             isRunning = false;
             animator.SetBool("isRunning", true);
             //animator.SetBool("IsWalking", true);
+            //runningAudio.Stop();
+            //walkingAudio.pitch = 0.2f;
+            //walkingAudio.Play();
         }
 
-        if (Input.GetKey(KeyCode.W) && (Input.GetKey(KeyCode.LeftShift) || Input.GetKey(KeyCode.RightShift)))
+        if (Input.GetKey(KeyCode.W) && (Input.GetKey(KeyCode.LeftShift)))
         {
             isRunning = true;
             animator.SetBool("isRunning", true);
+            //walkingAudio.Stop();
+            //runningAudio.pitch = 0.5f;
+            //runningAudio.Play();
         }
 
-        if (Input.GetKeyUp(KeyCode.LeftShift))
-        {
-            isRunning = false;
-            animator.SetBool("isRunning", true);
-            //animator.SetBool("IsWalking", true);
-        }
+        //if (Input.GetKeyUp(KeyCode.LeftShift))
+        //{
+        //    isRunning = false;
+        //    animator.SetBool("isRunning", true);
+        //    //animator.SetBool("IsWalking", true);
+        //}
 
         if (Input.GetKeyUp(KeyCode.W))
         {
             animator.SetBool("isRunning", false);
+            //walkingAudio.Stop();
+            //runningAudio.Stop();
         }
 
         //Time for dry if character not interact with rain
