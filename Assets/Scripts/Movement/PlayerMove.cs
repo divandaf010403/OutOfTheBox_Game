@@ -181,7 +181,7 @@ public class PlayerMove : MonoBehaviour
 
         if (other.tag == "EndDemo")
         {
-            SceneManager.LoadScene("EndDemo");
+            SceneManager.LoadScene("DemoEnd");
         }
     }
 
