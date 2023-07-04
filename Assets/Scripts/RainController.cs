@@ -17,6 +17,7 @@ public class RainController : MonoBehaviour
     [SerializeField] public GameObject rainTrigger;
 
     public AudioSource audioHujan;
+    public AudioSource audioPetir;
 
     public bool afterRain = false;
 
@@ -29,7 +30,7 @@ public class RainController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         //Rain
         //RainControll();
@@ -56,17 +57,23 @@ public class RainController : MonoBehaviour
     {
         int rainTime = Random.Range(40, 50);
         int longRain = Random.Range(30, 40);
-        int petir = Random.Range(3, 5);
+        int petir = 6;
 
         isFunctionCall = true;
 
         yield return new WaitForSeconds(rainTime);
+        isPetir = true;
+        audioPetir.Play();
+        yield return new WaitForSeconds(petir);
+        isPetir = false;
+        audioPetir.Stop();
         isRain = true;
         rainPS.SetActive(true);
         rainTrigger.SetActive(true);
         audioHujan.Play();
         conditionNow.text = "Rainy Weather";
         yield return new WaitForSeconds(longRain);
+        yield return FadeOutAudioSource(audioHujan, 3f);
         audioHujan.Stop();
         isRain = false;
         rainPS.SetActive(false);
@@ -75,6 +82,21 @@ public class RainController : MonoBehaviour
         afterRain = false;
 
         isFunctionCall = false;
+    }
+
+    IEnumerator FadeOutAudioSource(AudioSource audioSource, float fadeTime)
+    {
+        float startVolume = audioSource.volume;
+        float currentTime = 0;
+
+        while (currentTime < fadeTime)
+        {
+            currentTime += Time.deltaTime;
+            audioSource.volume = Mathf.Lerp(startVolume, 0, currentTime / fadeTime);
+            yield return null;
+        }
+
+        audioSource.Stop();
     }
 
     //void RainControll()

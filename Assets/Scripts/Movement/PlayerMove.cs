@@ -156,6 +156,8 @@ public class PlayerMove : MonoBehaviour
             rain.rainPS.SetActive(false);
             rain.rainTrigger.SetActive(false);
             rain.conditionNow.text = "Sunny Weather";
+            rain.audioHujan.Stop();
+            rain.isFunctionCall = false;
         }
 
         //Take Item
