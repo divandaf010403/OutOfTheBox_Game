@@ -120,13 +120,6 @@ public class PlayerMove : MonoBehaviour
             //runningAudio.Play();
         }
 
-        //if (Input.GetKeyUp(KeyCode.LeftShift))
-        //{
-        //    isRunning = false;
-        //    animator.SetBool("isRunning", true);
-        //    //animator.SetBool("IsWalking", true);
-        //}
-
         if (Input.GetKeyUp(KeyCode.W))
         {
             animator.SetBool("isRunning", false);
@@ -157,7 +150,6 @@ public class PlayerMove : MonoBehaviour
             rain.rainTrigger.SetActive(false);
             rain.conditionNow.text = "Sunny Weather";
             rain.audioHujan.Stop();
-            rain.isFunctionCall = false;
         }
 
         //Take Item
